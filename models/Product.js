@@ -7,8 +7,7 @@ const productSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        required: true,
-        enum: ['Beds', 'Windows', 'Doors', 'Chairs', 'Dining Tables']
+        required: true
     },
     price: {
         type: Number,
