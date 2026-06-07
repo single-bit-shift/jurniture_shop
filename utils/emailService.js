@@ -1,25 +1,38 @@
 const https = require('https');
 
-// Helper to send emails via Resend HTTP API
-function sendEmailViaResend({ to, subject, html }) {
+// Helper to send emails via SendGrid HTTP API
+function sendEmailViaSendGrid({ to, subject, html }) {
     return new Promise((resolve, reject) => {
-        const apiKey = process.env.RESEND_API_KEY;
-        if (!apiKey) {
-            return reject(new Error('RESEND_API_KEY not found in environment variables.'));
+        const apiKey = process.env.SENDGRID_API_KEY;
+        const fromEmail = process.env.SENDGRID_SENDER;
+
+        if (!apiKey || !fromEmail) {
+            return reject(new Error('SENDGRID_API_KEY or SENDGRID_SENDER is not defined in environment variables.'));
         }
 
-        const fromAddress = process.env.EMAIL_FROM || 'Teak & Timber <onboarding@resend.dev>';
         const payload = JSON.stringify({
-            from: fromAddress,
-            to: [to],
+            personalizations: [
+                {
+                    to: [{ email: to }]
+                }
+            ],
+            from: {
+                email: fromEmail,
+                name: 'Teak & Timber'
+            },
             subject: subject,
-            html: html
+            content: [
+                {
+                    type: 'text/html',
+                    value: html
+                }
+            ]
         });
 
         const options = {
-            hostname: 'api.resend.com',
+            hostname: 'api.sendgrid.com',
             port: 443,
-            path: '/emails',
+            path: '/v3/mail/send',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,15 +45,10 @@ function sendEmailViaResend({ to, subject, html }) {
             let data = '';
             res.on('data', (chunk) => data += chunk);
             res.on('end', () => {
-                try {
-                    const parsed = JSON.parse(data);
-                    if (res.statusCode >= 200 && res.statusCode < 300) {
-                        resolve(parsed);
-                    } else {
-                        reject(new Error(parsed.message || `Resend HTTP Error ${res.statusCode}`));
-                    }
-                } catch (e) {
-                    reject(new Error(`Failed to parse Resend response (Status ${res.statusCode}): ${data}`));
+                if (res.statusCode >= 200 && res.statusCode < 300) {
+                    resolve();
+                } else {
+                    reject(new Error(`SendGrid HTTP Error ${res.statusCode}: ${data}`));
                 }
             });
         });
@@ -184,7 +192,7 @@ async function sendOrderConfirmation(order, userEmail, userName) {
     `;
 
     try {
-        await sendEmailViaResend({
+        await sendEmailViaSendGrid({
             to: userEmail,
             subject: `Order Confirmed — ${order.orderId} | Teak & Timber`,
             html: wrapInTemplate('Order Confirmation', body)
@@ -235,7 +243,7 @@ async function sendOrderStatusUpdate(order, userEmail, userName, newStatus) {
     `;
 
     try {
-        await sendEmailViaResend({
+        await sendEmailViaSendGrid({
             to: userEmail,
             subject: `Order ${newStatus} — ${order.orderId} | Teak & Timber`,
             html: wrapInTemplate('Order Status Update', body)
@@ -278,7 +286,7 @@ async function sendWelcomeEmail(userName, userEmail) {
     `;
 
     try {
-        await sendEmailViaResend({
+        await sendEmailViaSendGrid({
             to: userEmail,
             subject: `Welcome to Teak & Timber, ${userName}!`,
             html: wrapInTemplate('Welcome Aboard', body)
