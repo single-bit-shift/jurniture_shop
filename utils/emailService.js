@@ -1,20 +1,56 @@
-const nodemailer = require('nodemailer');
+const https = require('https');
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // Use STARTTLS (port 587) which is much more reliable on cloud hosting networks like Render
-    family: 4, // Force IPv4 resolution to prevent ENETUNREACH errors on IPv6-unfriendly networks like Render
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-    tls: {
-        rejectUnauthorized: false
-    },
-    connectionTimeout: 15000, // 15 seconds
-    socketTimeout: 15000
-});
+// Helper to send emails via Resend HTTP API
+function sendEmailViaResend({ to, subject, html }) {
+    return new Promise((resolve, reject) => {
+        const apiKey = process.env.RESEND_API_KEY;
+        if (!apiKey) {
+            return reject(new Error('RESEND_API_KEY not found in environment variables.'));
+        }
+
+        const fromAddress = process.env.EMAIL_FROM || 'Teak & Timber <onboarding@resend.dev>';
+        const payload = JSON.stringify({
+            from: fromAddress,
+            to: [to],
+            subject: subject,
+            html: html
+        });
+
+        const options = {
+            hostname: 'api.resend.com',
+            port: 443,
+            path: '/emails',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Length': Buffer.byteLength(payload)
+            }
+        };
+
+        const req = https.request(options, (res) => {
+            let data = '';
+            res.on('data', (chunk) => data += chunk);
+            res.on('end', () => {
+                try {
+                    const parsed = JSON.parse(data);
+                    if (res.statusCode >= 200 && res.statusCode < 300) {
+                        resolve(parsed);
+                    } else {
+                        reject(new Error(parsed.message || `Resend HTTP Error ${res.statusCode}`));
+                    }
+                } catch (e) {
+                    reject(new Error(`Failed to parse Resend response (Status ${res.statusCode}): ${data}`));
+                }
+            });
+        });
+
+        req.on('error', (e) => reject(e));
+        req.write(payload);
+        req.end();
+    });
+}
+
 
 // ── Branded HTML Layout Wrapper ─────────────────────────────────
 function wrapInTemplate(title, bodyContent) {
@@ -148,8 +184,7 @@ async function sendOrderConfirmation(order, userEmail, userName) {
     `;
 
     try {
-        await transporter.sendMail({
-            from: `"Teak & Timber" <${process.env.EMAIL_USER}>`,
+        await sendEmailViaResend({
             to: userEmail,
             subject: `Order Confirmed — ${order.orderId} | Teak & Timber`,
             html: wrapInTemplate('Order Confirmation', body)
@@ -200,8 +235,7 @@ async function sendOrderStatusUpdate(order, userEmail, userName, newStatus) {
     `;
 
     try {
-        await transporter.sendMail({
-            from: `"Teak & Timber" <${process.env.EMAIL_USER}>`,
+        await sendEmailViaResend({
             to: userEmail,
             subject: `Order ${newStatus} — ${order.orderId} | Teak & Timber`,
             html: wrapInTemplate('Order Status Update', body)
@@ -244,8 +278,7 @@ async function sendWelcomeEmail(userName, userEmail) {
     `;
 
     try {
-        await transporter.sendMail({
-            from: `"Teak & Timber" <${process.env.EMAIL_USER}>`,
+        await sendEmailViaResend({
             to: userEmail,
             subject: `Welcome to Teak & Timber, ${userName}!`,
             html: wrapInTemplate('Welcome Aboard', body)
