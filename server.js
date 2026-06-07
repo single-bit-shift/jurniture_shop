@@ -71,7 +71,11 @@ const seedData = async () => {
 
 // Connect to the database
 connectDB().then(() => {
-    seedData();
+    if (process.env.NODE_ENV !== 'production') {
+        seedData();
+    } else {
+        console.log('Production environment detected: skipping seeding.');
+    }
 });
 
 const app = express();
