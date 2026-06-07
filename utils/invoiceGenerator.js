@@ -7,7 +7,10 @@ const PDFDocument = require('pdfkit');
  * @returns {PDFDocument} A readable stream of the PDF
  */
 function generateInvoice(order, user) {
-    const doc = new PDFDocument({ size: 'A4', margin: 50 });
+    const doc = new PDFDocument({
+        size: 'A4',
+        margins: { top: 50, bottom: 15, left: 50, right: 50 }
+    });
 
     const primaryColor = '#864f00';
     const darkColor = '#1b1c1b';
