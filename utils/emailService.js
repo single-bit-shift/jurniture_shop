@@ -4,6 +4,7 @@ const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
     secure: false, // Use STARTTLS (port 587) which is much more reliable on cloud hosting networks like Render
+    family: 4, // Force IPv4 resolution to prevent ENETUNREACH errors on IPv6-unfriendly networks like Render
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
