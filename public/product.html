@@ -1,0 +1,281 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=IBM+Plex+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#683d00",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#895101",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#ffb86b",
+                    "tertiary-fixed": "#e6e2dd",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "tertiary": "#5e5c58",
+                    "surface-container-low": "#f4f3f1",
+                    "outline-variant": "#d6c3b2",
+                    "surface-dim": "#dbdad8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#1c1b19",
+                    "surface": "#faf9f7",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2f3130",
+                    "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#ffb86b",
+                    "tertiary-container": "#777470",
+                    "on-tertiary-fixed-variant": "#484743",
+                    "outline": "#847466",
+                    "on-background": "#1b1c1b",
+                    "surface-variant": "#e3e2e0",
+                    "primary-fixed": "#ffdcbc",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "surface-container-highest": "#e3e2e0",
+                    "surface-bright": "#faf9f7",
+                    "secondary": "#5f5e5e",
+                    "surface-container": "#efeeec",
+                    "on-surface": "#1b1c1b",
+                    "on-primary-container": "#fffbff",
+                    "secondary-fixed": "#e5e2e1",
+                    "on-tertiary-container": "#fffbff",
+                    "background": "#faf9f7",
+                    "primary-container": "#a3671b",
+                    "on-secondary-container": "#636262",
+                    "on-surface-variant": "#524438",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#474746",
+                    "primary": "#864f00",
+                    "secondary-container": "#e2dfde",
+                    "surface-container-high": "#e9e8e6",
+                    "on-primary-fixed": "#2c1700",
+                    "tertiary-fixed-dim": "#cac6c1",
+                    "inverse-on-surface": "#f2f1ee",
+                    "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "border-width": "1.5px",
+                    "unit": "4px",
+                    "margin-desktop": "64px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Playfair Display"],
+                    "label-md": ["IBM Plex Sans"],
+                    "body-md": ["IBM Plex Sans"],
+                    "display-lg": ["Playfair Display"],
+                    "body-lg": ["IBM Plex Sans"],
+                    "headline-lg": ["Playfair Display"],
+                    "display-lg-mobile": ["Playfair Display"],
+                    "caption": ["IBM Plex Sans"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { background-color: #faf9f7; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Workshop Aesthetic Borders */
+        .workshop-border { border: 1.5px solid #847466; }
+        .workshop-border-b { border-bottom: 1.5px solid #d6c3b2; }
+        .workshop-border-r { border-right: 1.5px solid #d6c3b2; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-background">
+<!-- TopAppBar -->
+<header class="bg-inverse-surface dark:bg-inverse-surface border-b-border-width border-outline dark:border-outline-variant sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-gutter py-unit max-w-full">
+<div class="flex items-center gap-4"><span class="material-symbols-outlined text-primary" data-icon="menu">menu</span><div class="flex items-center gap-2"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuApOdzAXPydRRzCRskbbbvNF5fPSCIcPn7dLg3TWn3kG-SeTjzconCgSWhzWdvSLCHy_1f86vqT94RJAjNkaAWErZ0o5R7ZjcWlizgc73EBFGg5Rlfb7FY4E_iuc2RwD17eF5-NDi4R7l2-odz8Wy-xPCRkN26oCvgjVl-vKPzYt3Dov7G4Qf2xUQd6jtVNw9r7T78xJs-NGPhi7_de_TBpdElsXVsJMOB7CDyEHxWEZClArLDVcqyi8-B062WiMP8oD9zUnWCGj0JS" alt="Logo" class="h-10 w-10 object-contain"><span class="font-headline-md text-headline-md font-bold text-primary">Palamootttil wood industries and furniture</span></div></div>
+<div class="hidden md:flex gap-6 items-center">
+    <div class="hidden lg:flex gap-4 items-center">
+        <a id="profileName" class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2" href="/profile.html">Profile</a>
+        <button id="adminBtn" style="display:none;" class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2">Admin</button>
+        <a class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2" href="/orders.html">Orders</a>
+        <button id="cartToggleBtn" class="relative font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2 flex items-center gap-1">
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <span id="cartBadge" class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold hidden">0</span>
+        </button>
+    </div>
+    <button id="signOutBtn" class="font-label-md text-label-md text-on-primary font-bold hover:bg-primary-container hover:text-on-primary-container px-4 py-2 border-l border-outline uppercase tracking-widest">Sign Out</button>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 md:px-gutter py-8 lg:py-12">
+<!-- Breadcrumb -->
+<nav class="mb-8 flex items-center gap-2 overflow-x-auto whitespace-nowrap">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]" data-icon="chevron_right">chevron_right</span>
+<a id="breadcrumbCategory" class="font-label-md text-label-md text-on-surface-variant hover:text-primary" href="/index.html">Category</a>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]" data-icon="chevron_right">chevron_right</span>
+<span id="breadcrumbProductName" class="font-label-md text-label-md text-primary">Product Name</span>
+</nav>
+<!-- Product Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left: Product Image -->
+<div class="lg:col-span-7 workshop-border bg-surface-container">
+<div class="aspect-square bg-[#E8E4DE] relative overflow-hidden">
+<img id="productImage" alt="Handcrafted Furniture" class="w-full h-full object-cover" src="">
+</div>
+</div>
+<!-- Right: Details -->
+<div class="lg:col-span-5 space-y-6">
+<div class="workshop-border p-6 space-y-4 bg-surface">
+<div class="flex items-center gap-3">
+<span id="detailsCategoryTag" class="bg-surface-variant px-3 py-1 font-label-md text-[12px] uppercase workshop-border text-on-surface-variant">LIVING ROOM</span>
+<span id="detailsStockStatus" class="flex items-center gap-1 font-label-md text-[12px] text-primary">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle" data-weight="fill">check_circle</span>
+                            IN STOCK
+                        </span>
+</div>
+<h1 id="detailsTitle" class="font-display-lg text-display-lg text-on-surface leading-tight">Heritage Teak Coffee Table</h1>
+<div class="flex items-baseline gap-4">
+<span id="detailsPrice" class="font-headline-lg text-headline-lg text-on-surface">₹42,500</span>
+<span id="detailsOriginalPrice" class="font-body-md text-body-md text-on-surface-variant line-through hidden">₹48,000</span>
+</div>
+<div class="workshop-border-b pt-4 pb-2 border-outline-variant">
+<p id="detailsDescription" class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        </p>
+</div>
+<div class="pt-4 space-y-3">
+    <button id="addToCartBtn" class="w-full bg-primary text-on-primary font-label-md text-label-md py-4 uppercase tracking-widest hover:opacity-90 transition-opacity active:opacity-80 flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-sm">add_shopping_cart</span> Add to Cart
+    </button>
+    <button id="enquireBtn" class="w-full bg-primary-container text-on-primary-container font-label-md text-label-md py-4 uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-colors active:opacity-80 flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-sm">mail</span> Enquire Now
+    </button>
+</div>
+</div>
+<!-- Contact Box -->
+<div class="workshop-border p-6 bg-inverse-surface text-on-primary">
+<h3 class="font-headline-md text-headline-md mb-4 text-primary">Workshop Direct</h3>
+<div class="space-y-3">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="call">call</span>
+<span class="font-body-md text-body-md">+91 495 272 1000</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+<span class="font-body-md text-body-md">Kallai Road, Pathanamthitta, Kerala 689645</span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="schedule">schedule</span>
+<span class="font-body-md text-body-md">Mon - Sat: 09:00 AM - 07:00 PM</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Specifications Table Section -->
+<div class="mt-12 lg:mt-24">
+<h2 class="font-headline-lg text-headline-lg mb-8 uppercase tracking-tight">Technical Specifications</h2>
+<div class="workshop-border overflow-hidden">
+<table class="w-full text-left border-collapse">
+<tbody>
+<tr class="workshop-border-b">
+<th class="p-6 bg-surface-container-high workshop-border-r font-label-md text-label-md w-1/3 md:w-1/4">Material</th>
+<td id="specMaterial" class="p-6 font-body-md text-body-md text-on-surface">Grade-A Seasoned Malabar Teak Wood</td>
+</tr>
+<tr class="workshop-border-b">
+<th class="p-6 bg-surface-container-high workshop-border-r font-label-md text-label-md">Dimensions</th>
+<td id="specDimensions" class="p-6 font-body-md text-body-md text-on-surface">120cm (L) x 60cm (W) x 45cm (H)</td>
+</tr>
+<tr class="workshop-border-b">
+<th class="p-6 bg-surface-container-high workshop-border-r font-label-md text-label-md">Availability</th>
+<td id="specAvailability" class="p-6 font-body-md text-body-md text-on-surface">Immediate Delivery (Pathanamthitta Region)</td>
+</tr>
+<tr>
+<th class="p-6 bg-surface-container-high workshop-border-r font-label-md text-label-md">Category</th>
+<td id="specCategory" class="p-6 font-body-md text-body-md text-on-surface">Handcrafted Tables / Heritage Collection</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Additional Imagery / Bento Section -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="workshop-border aspect-square md:aspect-video lg:aspect-square bg-surface-container overflow-hidden">
+<img alt="Joint Detail" class="w-full h-full object-cover" data-alt="A macro close-up photograph showcasing the intricate finger-joint of a teak wood table corner. The craftsmanship is highlighted by high-contrast lighting that emphasizes the tight fit and the natural textures of the grain. The color palette consists of warm honey tones and deep amber shadows, reflecting a professional woodworking aesthetic. The focus is razor-sharp on the joinery, conveying a sense of structural honesty and premium quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ_gYVT7ZnnYHD9JY5UJKan0LW-ia5bzvwzTBru1JD6ASNOhtr5dJIJv1v6SdoYQyy-huzbYW4ne1oD1AJMHj-0ouDpnAKnGNUNhtVf93r9cEQFazLQB-lrxq1PfkCrF1VioS5IwhxaCIeJBSubMWrd0HrfICYc1nUhS6TMWN_0xc-66_TzKCjHDQpv1dii-j1gZNfnG8c83K7FRfmUV2kLv9QGR51UQNK1fxQK8y5d3ue9Xra0O1u-aEYP513nz5hl6BRa-8p6X1X">
+</div>
+<div class="workshop-border aspect-square md:aspect-video lg:aspect-square bg-surface-container overflow-hidden">
+<img alt="Wood Grain" class="w-full h-full object-cover" data-alt="An overhead flat-lay shot of a solid teak wood surface, revealing an expansive and complex natural grain pattern. The lighting is soft and even, mimicking a professional studio setting to bring out the subtle variations in the wood's pigment. The aesthetic is purely minimalist and geometric, focusing on the organic beauty of the material without any distractions. The tones range from light ochre to rich mahogany, maintaining a warm and sturdy brand personality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsSxNSW0D-5XPOaxdnpaNvj1Tb4OeQmChWdQVXTDwwfFW9IfbTrakqgcJc_KOHPVSSkKjd4OkV0Gy1g4t8RJ1eplPWnx-clKpXVoRJZAq8keIlgJVGoiTCqA9VbNOaOsosntJVcTmwcRhve8XyivuimJxweVO1vWWG9F4wEPyvZazYCoB35ss7HKtkErzgfCsOOYm8knlK4Jzcbxk2DUgck1hJaVhZDU9Ir0RftGvvnO0mOlO22IYCJdx8AglpyfNoGvu0bizrVaAK">
+</div>
+<div class="workshop-border aspect-square md:aspect-video lg:aspect-square bg-surface-container overflow-hidden">
+<img alt="Workshop Setting" class="w-full h-full object-cover" data-alt="A wide-angle interior view of a contemporary woodworking workshop in Pathanamthitta. The space is filled with industrial tools, architectural blueprints pinned to a concrete wall, and stacks of raw timber. Soft natural light pours in from large industrial windows, creating an atmosphere of focused craftsmanship and authenticity. The scene is captured in a high-key, clean style with a palette of greys, whites, and natural wood accents, reinforcing the brand's industrial minimalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAErpJY-LhU3UMaKcZfoHPUJ-1EaiIQT6K7DUM0i3MuL-kem3RoCPCwB4jXaYfOAyKxd2K-3kEe5iKQDSTjADjUEhQTFyO87PwHzZx_JO00wy5kBZB8KDi55sdvWhA2MPJ4X-gzYSYPTfQV4lUSo968h7tLmNJUz36ZeWjECeARjhNyOIUxzPR51cnUMZ2lVlcI0giDXRXPEjl4OPNhnalkAnx7f20bJV7HEFcnirtjAnNAGCeX428ixWZYfypPN63ANq8Lz2lbxfGG">
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-surface-dim border-t-border-width border-outline mt-12">
+<div class="w-full py-8 px-gutter flex flex-col items-center justify-center space-y-4">
+<span class="font-headline-md text-headline-md text-on-surface font-bold uppercase tracking-tighter">Palamootttil wood industries and furniture</span>
+<div class="flex gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">About Us</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Shipping Policy</a>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Palamootttil wood industries and furniture · Pathanamthitta, Kerala.</p>
+</div>
+</footer>
+
+
+
+
+<!-- Enquire Modal -->
+<div id="enquireModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <!-- Backdrop -->
+    <div id="enquireBackdrop" class="absolute inset-0 bg-black/55"></div>
+    <!-- Content -->
+    <div class="relative bg-surface border-2 border-outline p-6 max-w-md w-full mx-4 z-10 space-y-4 shadow-2xl">
+        <div class="flex justify-between items-center border-b border-outline-variant pb-2">
+            <h3 class="font-headline-md text-label-md text-primary uppercase tracking-wider flex items-center gap-2">
+                <span class="material-symbols-outlined">mail</span> Product Inquiry
+            </h3>
+            <button id="enquireCloseBtn" class="text-on-surface hover:text-primary flex items-center">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form id="enquireForm" class="space-y-4">
+            <div>
+                <label class="block font-label-md text-[11px] uppercase tracking-wider text-on-surface-variant mb-1">Product Name</label>
+                <input id="enquireProductName" readonly class="w-full bg-surface-container border border-outline-variant px-3 py-2 font-body-md text-on-surface focus:outline-none" type="text">
+            </div>
+            <div>
+                <label class="block font-label-md text-[11px] uppercase tracking-wider text-on-surface-variant mb-1">Your Message</label>
+                <textarea id="enquireMessage" required rows="4" class="w-full bg-surface border border-outline px-3 py-2 font-body-md focus:outline-none focus:border-primary transition-colors text-on-surface" placeholder="Hi, I am interested in this product and would like to know more about the customization options..."></textarea>
+            </div>
+            <div id="enquireError" class="text-error font-label-md text-[12px] hidden"></div>
+            <div id="enquireSuccess" class="text-primary font-label-md text-[12px] hidden"></div>
+            <button type="submit" id="enquireSubmitBtn" class="w-full bg-primary text-on-primary py-3 font-label-md uppercase tracking-widest hover:opacity-90 transition-opacity">
+                Send Inquiry
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/cart.js"></script>
+<script src="/js/product.js"></script>
+</body>
+</html>

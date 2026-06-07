@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>My Orders | Palamootttil wood industries and furniture</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=IBM+Plex+Sans:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+            rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            background-color: #faf9f7;
+            color: #1b1c1b;
+        }
+
+        .blueprint-border {
+            border: 1.5px solid #d6c3b2;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#864f00",
+                        "primary-container": "#a3671b",
+                        "on-primary": "#ffffff",
+                        "surface": "#faf9f7",
+                        "surface-container": "#efeeec",
+                        "surface-container-low": "#f4f3f1",
+                        "on-surface": "#1b1c1b",
+                        "on-surface-variant": "#524438",
+                        "outline": "#847466",
+                        "outline-variant": "#d6c3b2",
+                        "inverse-surface": "#2f3130",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-background text-on-surface font-body-md">
+    <!-- TopAppBar -->
+    <header class="bg-inverse-surface flex justify-between items-center w-full px-gutter py-unit max-w-full docked full-width top-0 z-50 border-b-border-width border-outline">
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+            <div class="flex items-center gap-3">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuApOdzAXPydRRzCRskbbbvNF5fPSCIcPn7dLg3TWn3kG-SeTjzconCgSWhzWdvSLCHy_1f86vqT94RJAjNkaAWErZ0o5R7ZjcWlizgc73EBFGg5Rlfb7FY4E_iuc2RwD17eF5-NDi4R7l2-odz8Wy-xPCRkN26oCvgjVl-vKPzYt3Dov7G4Qf2xUQd6jtVNw9r7T78xJs-NGPhi7_de_TBpdElsXVsJMOB7CDyEHxWEZClArLDVcqyi8-B062WiMP8oD9zUnWCGj0JS"
+                     alt="Logo" class="h-12 w-auto object-contain">
+                <span class="font-headline-md text-headline-md font-bold text-primary uppercase tracking-wider">
+                    Palamootttil wood industries and furniture
+                </span>
+            </div>
+        </div>
+        <div class="flex items-center gap-6">
+            <div class="hidden lg:flex gap-4 items-center">
+                <a id="profileName" class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2"
+                   href="/profile.html">Profile</a>
+                <button id="adminBtn" style="display:none;" class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2">Admin</button>
+                <a class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2 border-b-2 border-primary"
+                   href="/orders.html">Orders</a>
+                <button id="cartToggleBtn" class="relative font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2 flex items-center gap-1">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold hidden">0</span>
+                </button>
+            </div>
+            <button id="signOutBtn"
+                    class="font-label-md text-label-md text-on-primary font-bold hover:bg-primary-container hover:text-on-primary-container px-4 py-2 border-l border-outline uppercase tracking-widest">
+                Sign Out
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <div class="mb-8 flex items-center justify-between">
+            <div>
+                <h1 class="font-display-lg text-headline-lg text-primary uppercase tracking-wider">My Purchase History</h1>
+                <p class="text-on-surface-variant font-body-md mt-1">Track and manage your handcrafted furniture orders.</p>
+            </div>
+            <a href="/index.html" class="blueprint-border border-primary text-primary px-4 py-2 font-label-md uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-colors flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">arrow_back</span> Back to Shop
+            </a>
+        </div>
+
+        <div id="ordersContainer" class="space-y-6">
+            <!-- Dynamically populated orders -->
+            <div class="text-center py-16 text-on-surface-variant">
+                <p>Loading your orders...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container-highest dark:bg-surface-dim border-t-border-width border-outline mt-24">
+        <div class="w-full py-8 px-gutter flex flex-col items-center justify-center space-y-4">
+            <span class="font-headline-md text-headline-md text-on-surface font-bold uppercase tracking-tighter">
+                Palamootttil wood industries and furniture
+            </span>
+            <p class="font-body-md text-body-md text-on-surface-variant">Palamootttil wood industries and furniture · Pathanamthitta, Kerala.</p>
+        </div>
+    </footer>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/orders.js"></script>
+</body>
+
+</html>

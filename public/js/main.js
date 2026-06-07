@@ -1,0 +1,214 @@
+document.addEventListener("DOMContentLoaded", async () => {
+    console.log("MAIN JS RUNNING 🚀");
+
+    // ── 1. AUTH GUARD ──────────────────────────────────────────────
+    if (!auth.isLoggedIn()) {
+        window.location.href = "/login.html";
+        return; // stop all further execution
+    }
+
+    // ── ADMIN BUTTON VISIBILITY ──────────────────────────────────────
+    const adminBtn = document.getElementById("adminBtn");
+
+    if (isAdmin()) {
+        if (adminBtn) {
+            adminBtn.style.display = "inline-block"; // match existing button layout
+            adminBtn.addEventListener("click", () => {
+                window.location.href = "/admin.html";
+            });
+        }
+    }
+
+    // ── 2. PROFILE HEADER ──────────────────────────────────────────
+    const user = auth.getUser();
+    const profileNameEl = document.getElementById("profileName");
+    if (profileNameEl && user) {
+        profileNameEl.textContent = user.name;
+        if (user.isAdmin) {
+            profileNameEl.href = "/admin.html";
+        } else {
+            profileNameEl.href = "/login.html";
+        }
+    }
+    const signOutBtn = document.getElementById("signOutBtn");
+    if (signOutBtn) {
+        signOutBtn.addEventListener("click", () => {
+            auth.logout();
+        });
+    }
+
+    // ── 3. STATE ───────────────────────────────────────────────────
+    let currentCategory = "";
+    let currentSearch = "";
+    const container = document.getElementById("productsContainer");
+
+    if (!container) {
+        console.error("Products container not found ❌");
+        return;
+    }
+
+    // ── 4. CORE LOAD FUNCTION ──────────────────────────────────────
+    async function loadProducts() {
+        // Loading state
+        container.innerHTML = `<div class="col-span-full loading">Loading...</div>`;
+
+        try {
+            const res = await api.getProducts(currentCategory, currentSearch);
+
+            if (res.success) {
+                const products = res.data;
+
+                // Set counts dynamically when no category/search filter is active
+                if (currentCategory === "" && currentSearch === "") {
+                    const categories = ['Beds', 'Windows', 'Doors', 'Chairs', 'Dining Tables'];
+                    categories.forEach(cat => {
+                        const count = products.filter(p => p.category === cat).length;
+                        const id = `catCount${cat.replace(' ', '')}`;
+                        const el = document.getElementById(id);
+                        if (el) {
+                            el.textContent = `${count} ${count === 1 ? 'Item' : 'Items'}`;
+                        }
+                    });
+                }
+
+                if (products.length === 0) {
+                    container.innerHTML = `<div class="col-span-full empty-state">No products found.</div>`;
+                    return;
+                }
+
+                container.innerHTML = products.map(p => `
+                    <div class="blueprint-border group cursor-pointer bg-surface product-card" data-id="${p._id}">
+                        <div class="aspect-[4/5] bg-surface-variant relative overflow-hidden">
+                            <img src="${p.image || 'https://dummyimage.com/300x300/cccccc/000000&text=No+Image'}"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="${p.name}">
+                            <div class="absolute top-4 left-4 ${p.stock === 'In Stock' ? 'bg-primary' : 'bg-tertiary'} px-3 py-1">
+                                <span class="font-label-md text-[10px] text-on-primary uppercase font-bold">
+                                    ${p.stock}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <span class="font-caption text-caption text-on-surface-variant uppercase tracking-widest mb-1 block">
+                                ${p.category}
+                            </span>
+                            <h3 class="font-label-md text-label-md mb-2 group-hover:text-primary transition-colors">
+                                ${p.name}
+                            </h3>
+                            <p class="font-body-md text-sm text-on-surface-variant mb-4 line-clamp-2">
+                                ${p.description || ""}
+                            </p>
+                            <div class="flex justify-between items-center border-t-border-width border-outline-variant pt-4">
+                                <span class="font-headline-md text-headline-md text-on-surface">
+                                    ₹${Number(p.price || 0).toLocaleString('en-IN')}
+                                </span>
+                                <span class="material-symbols-outlined text-primary-container" data-icon="add_shopping_cart">add_shopping_cart</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join("");
+
+                // Attach click → detail page
+                container.querySelectorAll(".product-card").forEach(card => {
+                    card.addEventListener("click", () => {
+                        window.location.href = `/product.html?id=${card.dataset.id}`;
+                    });
+                });
+            } else {
+                console.error("API failed", res);
+                container.innerHTML = `<div class="col-span-full error-state">Something went wrong. Please try again.</div>`;
+            }
+        } catch (err) {
+            console.error("Failed to load products:", err);
+            container.innerHTML = `<div class="col-span-full error-state">Something went wrong. Please try again.</div>`;
+        }
+    }
+
+    // ── 5. SYNC HELPER ─────────────────────────────────────────────
+    // Keeps the header dropdown and secondary nav visually in sync
+    function syncCategoryUI(category) {
+        // Update dropdown
+        const headerCatSelect = document.getElementById("headerCategorySelect");
+        if (headerCatSelect) {
+            headerCatSelect.value = category;
+        }
+
+        // Update active nav link
+        document.querySelectorAll("#navCategoryLinks a").forEach(link => {
+            link.classList.toggle("active", link.dataset.category === category);
+        });
+    }
+
+    // ── 6. EVENT LISTENERS ─────────────────────────────────────────
+
+    // Header dropdown change
+    const headerCatSelect = document.getElementById("headerCategorySelect");
+    if (headerCatSelect) {
+        headerCatSelect.addEventListener("change", (e) => {
+            currentCategory = e.target.value;
+            sessionStorage.setItem("activeCategory", currentCategory);
+            syncCategoryUI(currentCategory);
+            loadProducts();
+        });
+    }
+
+    // Search button click
+    const headerSearchBtn = document.getElementById("headerSearchBtn");
+    if (headerSearchBtn) {
+        headerSearchBtn.addEventListener("click", () => {
+            const searchInput = document.getElementById("headerSearchInput");
+            currentSearch = searchInput ? searchInput.value.trim() : "";
+            loadProducts();
+        });
+    }
+
+    // Enter key in search input
+    const headerSearchInput = document.getElementById("headerSearchInput");
+    if (headerSearchInput) {
+        headerSearchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                currentSearch = e.target.value.trim();
+                loadProducts();
+            }
+        });
+    }
+
+    // Secondary nav category links
+    const navCategoryLinks = document.getElementById("navCategoryLinks");
+    if (navCategoryLinks) {
+        navCategoryLinks.addEventListener("click", (e) => {
+            e.preventDefault();
+            const link = e.target.closest("a[data-category]");
+            if (!link) return;
+            currentCategory = link.dataset.category;
+            sessionStorage.setItem("activeCategory", currentCategory);
+            syncCategoryUI(currentCategory);
+            loadProducts();
+        });
+    }
+
+    // "All Categories" reset
+    const navAllCategories = document.getElementById("navAllCategories");
+    if (navAllCategories) {
+        navAllCategories.addEventListener("click", () => {
+            currentCategory = "";
+            currentSearch = "";
+            sessionStorage.removeItem("activeCategory");
+            const searchInput = document.getElementById("headerSearchInput");
+            if (searchInput) searchInput.value = "";
+            syncCategoryUI("");
+            loadProducts();
+        });
+    }
+
+    // ── 7. INITIAL LOAD ────────────────────────────────────────────
+    const params = new URLSearchParams(window.location.search);
+    const urlCat = params.get("category");
+    if (urlCat !== null) {
+        currentCategory = urlCat;
+        sessionStorage.setItem("activeCategory", currentCategory);
+    } else {
+        currentCategory = sessionStorage.getItem("activeCategory") || "";
+    }
+    syncCategoryUI(currentCategory);
+    loadProducts();
+});

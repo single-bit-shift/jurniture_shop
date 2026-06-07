@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Admin Panel - Teak &amp; Timber</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;family=Playfair+Display:wght@600;700&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#683d00",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#895101",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#ffb86b",
+                        "tertiary-fixed": "#e6e2dd",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "tertiary": "#5e5c58",
+                        "surface-container-low": "#f4f3f1",
+                        "outline-variant": "#d6c3b2",
+                        "surface-dim": "#dbdad8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#1c1b19",
+                        "surface": "#faf9f7",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2f3130",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#ffb86b",
+                        "tertiary-container": "#777470",
+                        "on-tertiary-fixed-variant": "#484743",
+                        "outline": "#847466",
+                        "on-background": "#1b1c1b",
+                        "surface-variant": "#e3e2e0",
+                        "primary-fixed": "#ffdcbc",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-container-highest": "#e3e2e0",
+                        "surface-bright": "#faf9f7",
+                        "secondary": "#5f5e5e",
+                        "surface-container": "#efeeec",
+                        "on-surface": "#1b1c1b",
+                        "on-primary-container": "#fffbff",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-tertiary-container": "#fffbff",
+                        "background": "#faf9f7",
+                        "primary-container": "#a3671b",
+                        "on-secondary-container": "#636262",
+                        "on-surface-variant": "#524438",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#474746",
+                        "primary": "#864f00",
+                        "secondary-container": "#e2dfde",
+                        "surface-container-high": "#e9e8e6",
+                        "on-primary-fixed": "#2c1700",
+                        "tertiary-fixed-dim": "#cac6c1",
+                        "inverse-on-surface": "#f2f1ee",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "border-width": "1.5px",
+                        "unit": "4px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display"],
+                        "label-md": ["IBM Plex Sans"],
+                        "body-md": ["IBM Plex Sans"],
+                        "display-lg": ["Playfair Display"],
+                        "body-lg": ["IBM Plex Sans"],
+                        "headline-lg": ["Playfair Display"],
+                        "display-lg-mobile": ["Playfair Display"],
+                        "caption": ["IBM Plex Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Custom scrollbar for utilitarian look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #efeeec;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #847466;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md text-body-md overflow-x-hidden">
+    <!-- Navigation Drawer -->
+    <aside
+        class="flex flex-col h-screen fixed left-0 top-0 z-40 bg-inverse-surface border-r-border-width border-outline w-64">
+        <div class="p-gutter"><img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgSXvaC07tviW70sd5SZZiSvz3f5wTay50e_Xx_goU0JlEamnVAVn6yFtuSCdAwhweXHBlpbMnzMMqzrg7Kg50B0SaY1D90iL3AwNN__b--HnOAnhPliUR7rmG0SDT-TquQpe_kTT7VGjGUqLAz97UWyhnr1SK-9jQsug9USgAu6nW2TFi2bi9LiGFCQ9EyZ20f2Ls1fN-5m8ysdxGsuCunMekGC0gg4U1a-sZVisvhraXNLS9Vvji2eZWlUPz8tk760p-xJCk4ltn"
+                alt="Logo" class="w-32 h-auto mb-6">
+            <h1 class="font-headline-md text-headline-md text-primary mb-8 tracking-tight">Palamootttil wood industries
+                and furniture</h1>
+            <nav id="adminSidebarNav" class="space-y-unit">
+                <a id="tabDashboard" class="flex items-center gap-3 px-4 py-3 bg-primary text-on-primary font-bold transition-colors duration-200 cursor-pointer">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span class="font-label-md text-label-md">Dashboard</span>
+                </a>
+                <a id="tabProducts" class="flex items-center gap-3 px-4 py-3 text-on-primary-fixed-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 cursor-pointer">
+                    <span class="material-symbols-outlined">inventory_2</span>
+                    <span class="font-label-md text-label-md">Manage Products</span>
+                </a>
+                <a id="tabOrders" class="flex items-center justify-between px-4 py-3 text-on-primary-fixed-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined">local_shipping</span>
+                        <span class="font-label-md text-label-md">Orders</span>
+                    </div>
+                    <span id="pendingOrdersBadge" class="bg-primary text-on-primary text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold hidden">0</span>
+                </a>
+                <a id="tabCategories" class="flex items-center gap-3 px-4 py-3 text-on-primary-fixed-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 cursor-pointer">
+                    <span class="material-symbols-outlined">category</span>
+                    <span class="font-label-md text-label-md">Categories</span>
+                </a>
+                <a id="backToShopBtn" class="flex items-center gap-3 px-4 py-3 text-on-primary-fixed-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 mt-auto cursor-pointer"
+                    href="#">
+                    <span class="material-symbols-outlined">storefront</span>
+                    <span class="font-label-md text-label-md">Back to Shop</span>
+                </a>
+            </nav>
+        </div>
+        <div class="mt-auto p-gutter border-t border-outline-variant/20"><img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgSXvaC07tviW70sd5SZZiSvz3f5wTay50e_Xx_goU0JlEamnVAVn6yFtuSCdAwhweXHBlpbMnzMMqzrg7Kg50B0SaY1D90iL3AwNN__b--HnOAnhPliUR7rmG0SDT-TquQpe_kTT7VGjGUqLAz97UWyhnr1SK-9jQsug9USgAu6nW2TFi2bi9LiGFCQ9EyZ20f2Ls1fN-5m8ysdxGsuCunMekGC0gg4U1a-sZVisvhraXNLS9Vvji2eZWlUPz8tk760p-xJCk4ltn"
+                alt="Logo" class="w-32 h-auto mb-6">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
+                    JD</div>
+                <div>
+                    <p class="font-label-md text-label-md text-on-primary">Admin User</p>
+                    <p class="text-caption text-on-primary-fixed-variant uppercase">Pathanamthitta Branch</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <main class="ml-64 min-h-screen">
+        <!-- TopAppBar -->
+        <header
+            class="flex justify-between items-center w-full px-gutter py-6 bg-inverse-surface border-b-border-width border-outline sticky top-0 z-30">
+            <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary" data-icon="menu">menu</span><img
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgSXvaC07tviW70sd5SZZiSvz3f5wTay50e_Xx_goU0JlEamnVAVn6yFtuSCdAwhweXHBlpbMnzMMqzrg7Kg50B0SaY1D90iL3AwNN__b--HnOAnhPliUR7rmG0SDT-TquQpe_kTT7VGjGUqLAz97UWyhnr1SK-9jQsug9USgAu6nW2TFi2bi9LiGFCQ9EyZ20f2Ls1fN-5m8ysdxGsuCunMekGC0gg4U1a-sZVisvhraXNLS9Vvji2eZWlUPz8tk760p-xJCk4ltn"
+                    alt="Logo" class="h-8 w-auto ml-2">
+                <span class="font-headline-md text-headline-md font-bold text-primary">Palamootttil wood industries and
+                    furniture</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex gap-6">
+                    <a class="text-primary font-bold font-label-md text-label-md active:opacity-80 transition-opacity"
+                        href="#">OVERVIEW</a>
+                    <a class="text-on-primary font-label-md text-label-md hover:text-primary transition-colors"
+                        href="#">INVENTORY</a>
+                    <a class="text-on-primary font-label-md text-label-md hover:text-primary transition-colors"
+                        href="#">ORDERS</a>
+                </div>
+                <button id="adminSignOutBtn"
+                    class="font-label-md text-label-md text-primary uppercase border-b-2 border-primary hover:opacity-80 transition-opacity">Sign
+                    Out</button>
+            </div>
+        </header>
+
+        <!-- Dashboard View -->
+        <div id="viewDashboard" class="space-y-6 p-6">
+            <!-- Dashboard Stats Grid -->
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+                <div class="border-border-width border-outline p-6 bg-surface-container-low">
+                    <p class="text-caption uppercase text-on-surface-variant font-bold mb-2">Total Products</p>
+                    <h2 id="stat-total" class="font-display-lg text-display-lg text-on-surface">—</h2>
+                    <div class="mt-4 flex items-center text-primary">
+                        <span class="material-symbols-outlined text-sm" data-icon="inventory_2">inventory_2</span>
+                        <span class="text-caption ml-1">All products in database</span>
+                    </div>
+                </div>
+                <div class="border-border-width border-outline p-6 bg-surface-container-low">
+                    <p class="text-caption uppercase text-on-surface-variant font-bold mb-2">Out of Stock</p>
+                    <h2 id="stat-outofstock" class="font-display-lg text-display-lg text-on-surface">—</h2>
+                    <p class="mt-4 text-caption text-error" id="stat-outofstock-label">Loading...</p>
+                </div>
+                <div class="border-border-width border-outline p-6 bg-primary-container text-on-primary-container">
+                    <p class="text-caption uppercase opacity-80 font-bold mb-2">In Stock</p>
+                    <h2 id="stat-instock" class="font-display-lg text-display-lg">—</h2>
+                    <div class="mt-4 flex items-center">
+                        <span class="material-symbols-outlined text-sm" data-icon="inventory">inventory</span>
+                        <span id="stat-instock-label" class="text-caption ml-1">Loading...</span>
+                    </div>
+                </div>
+            </section>
+            <!-- Category Breakdown Table -->
+            <section class="border-border-width border-outline bg-surface">
+                <div class="p-6 border-b border-outline">
+                    <h3 class="font-headline-lg text-headline-lg text-on-surface">Category Performance</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-surface-container-highest">
+                            <tr>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Category Name</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Stock Count</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Value (INR)</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="category-tbody">
+                            <!-- Loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+        <!-- Products View -->
+        <div id="viewProducts" class="hidden space-y-6 p-6">
+            <!-- Manage Products Header -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <h3 class="font-headline-lg text-headline-lg">Product Inventory</h3>
+                <button onclick="document.getElementById('productForm').scrollIntoView({ behavior: 'smooth' })"
+                    class="bg-primary text-on-primary px-6 py-3 font-label-md text-label-md uppercase font-bold flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+                    <span class="material-symbols-outlined">add</span>
+                    Add New Product
+                </button>
+            </div>
+            <!-- Search Filter Bar -->
+            <div class="w-full bg-surface-container-low border border-outline p-4 flex gap-4">
+                <div class="flex-grow">
+                    <input id="productSearchInput" class="w-full bg-surface border border-outline px-4 py-2 font-body-md text-on-surface placeholder:text-outline-variant focus:outline-none focus:border-primary" placeholder="Search products by name or category...">
+                </div>
+            </div>
+            <!-- Product Inventory Table -->
+            <section class="border-border-width border-outline bg-surface">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-surface-container-highest">
+                            <tr>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">ID</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Product</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Category</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Price (INR)</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Stock Status</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-tbody">
+                            <!-- Loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination Controls -->
+                <div class="flex justify-between items-center p-4 border-t border-outline bg-surface-container-low">
+                    <span id="productPaginationInfo" class="font-body-md text-sm text-on-surface-variant">Showing 1-10 of 0 products</span>
+                    <div class="flex gap-2">
+                        <button id="prevPageBtn" class="px-4 py-2 border border-outline text-on-surface hover:bg-surface-variant transition-colors disabled:opacity-50 disabled:pointer-events-none font-label-md text-sm uppercase">Previous</button>
+                        <button id="nextPageBtn" class="px-4 py-2 border border-outline text-on-surface hover:bg-surface-variant transition-colors disabled:opacity-50 disabled:pointer-events-none font-label-md text-sm uppercase">Next</button>
+                    </div>
+                </div>
+            </section>
+            <!-- Product Form Section -->
+            <section class="border-border-width border-outline bg-surface p-gutter mt-12 max-w-4xl mx-auto">
+                <h3 id="formTitle" class="font-headline-lg text-headline-lg mb-8 pb-4 border-b border-outline">New Product Entry</h3>
+                <form id="productForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="font-label-md text-label-md uppercase text-secondary">Product Name</label>
+                            <input name="name"
+                                class="w-full bg-surface-container-low border-border-width border-outline px-4 py-3 text-on-surface"
+                                placeholder="e.g. Malabar Dining Table" type="text">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-label-md text-label-md uppercase text-secondary">Category</label>
+                            <select name="category" id="productFormCategorySelect"
+                                class="w-full bg-surface-container-low border-border-width border-outline px-4 py-3 text-on-surface">
+                                <!-- Loaded dynamically from backend categories -->
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-label-md text-label-md uppercase text-secondary">Price (INR)</label>
+                            <input name="price"
+                                class="w-full bg-surface-container-low border-border-width border-outline px-4 py-3 text-on-surface"
+                                placeholder="45000" type="number">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-label-md text-label-md uppercase text-secondary">Material</label>
+                            <input name="material"
+                                class="w-full bg-surface-container-low border-border-width border-outline px-4 py-3 text-on-surface"
+                                placeholder="e.g. Reclaimed Teak Wood" type="text">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-label-md text-label-md uppercase text-secondary">Dimensions</label>
+                            <input name="dimensions"
+                                class="w-full bg-surface-container-low border-border-width border-outline px-4 py-3 text-on-surface"
+                                placeholder="L x W x H (cm)" type="text">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-label-md text-label-md uppercase text-secondary">Stock Status</label>
+                            <select name="stock"
+                                class="w-full bg-surface-container-low border-border-width border-outline px-4 py-3 text-on-surface">
+                                <option value="In Stock">In Stock</option>
+                                <option value="Out of Stock">Out of Stock</option>
+                                <option value="Made to Order">Made to Order</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-label-md text-label-md uppercase text-secondary">Product Description</label>
+                        <textarea name="description"
+                            class="w-full bg-surface-container-low border-border-width border-outline px-4 py-3 text-on-surface"
+                            placeholder="Detailed technical specifications and design notes..." rows="4"></textarea>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-label-md text-label-md uppercase text-secondary">Product Images</label>
+                        <div
+                            class="border-border-width border-dashed border-outline p-8 bg-surface-container-low text-center">
+                            <span class="material-symbols-outlined text-4xl text-outline mb-2">upload_file</span>
+                            <p class="text-caption text-secondary">DRAG AND DROP IMAGES OR <span
+                                    class="text-primary font-bold underline cursor-pointer">BROWSE FILES</span></p>
+                            <p class="text-[10px] text-outline-variant mt-2 uppercase">Recommended: 1200x800px JPG or
+                                PNG</p>
+                        </div>
+                        <input type="file" name="image" accept="image/*"
+                            class="mt-3 w-full text-sm text-on-surface-variant
+                                   file:mr-4 file:py-2 file:px-4
+                                   file:border-border-width file:border-outline
+                                   file:bg-surface-container file:text-on-surface
+                                   file:font-label-md file:uppercase file:cursor-pointer
+                                   hover:file:bg-surface-variant">
+                        <p class="text-caption text-outline-variant mt-1 uppercase">— or paste a URL below —</p>
+                        <div class="space-y-2 mt-2">
+                            <input name="imageUrl"
+                                class="w-full bg-surface-container-low border-border-width border-outline px-4 py-3 text-on-surface"
+                                placeholder="Paste image URL here (https://...)" type="text">
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-4 pt-6">
+                        <button
+                            id="discardBtn"
+                            class="px-8 py-3 border-border-width border-secondary text-secondary font-label-md text-label-md uppercase font-bold hover:bg-surface-variant transition-colors"
+                            type="button">Discard</button>
+                        <button
+                            class="px-8 py-3 bg-primary text-on-primary font-label-md text-label-md uppercase font-bold hover:opacity-90 transition-opacity"
+                            type="submit">Save Product</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <!-- Orders View -->
+        <div id="viewOrders" class="hidden space-y-6 p-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h3 class="font-headline-lg text-headline-lg">Order Management</h3>
+                    <p class="text-on-surface-variant text-sm mt-1">Manage, update, and track customer purchases.</p>
+                </div>
+            </div>
+            <!-- Orders Filters & Search -->
+            <div class="flex flex-col md:flex-row gap-4 justify-between items-stretch">
+                <!-- Status Filter Tabs -->
+                <div id="orderStatusFilters" class="flex gap-2 overflow-x-auto pb-2 border-b border-outline-variant flex-grow">
+                    <button data-status="" class="px-4 py-2 bg-primary text-on-primary font-label-md text-label-md uppercase">All</button>
+                    <button data-status="Pending" class="px-4 py-2 text-on-surface-variant hover:bg-surface-variant transition-colors font-label-md text-label-md uppercase">Pending</button>
+                    <button data-status="Confirmed" class="px-4 py-2 text-on-surface-variant hover:bg-surface-variant transition-colors font-label-md text-label-md uppercase">Confirmed</button>
+                    <button data-status="Ready for Delivery" class="px-4 py-2 text-on-surface-variant hover:bg-surface-variant transition-colors font-label-md text-label-md uppercase">Ready for Delivery</button>
+                    <button data-status="Delivered" class="px-4 py-2 text-on-surface-variant hover:bg-surface-variant transition-colors font-label-md text-label-md uppercase">Delivered</button>
+                </div>
+                <!-- Search -->
+                <div class="w-full md:w-80">
+                    <input id="orderSearchInput" class="w-full bg-surface border border-outline px-4 py-2 font-body-md text-on-surface placeholder:text-outline-variant focus:outline-none focus:border-primary" placeholder="Search ID or Customer...">
+                </div>
+            </div>
+            <!-- Orders Table -->
+            <section class="border-border-width border-outline bg-surface">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-surface-container-highest">
+                            <tr>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Order ID</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Customer</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Items</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Total Amount</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Date</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Status</th>
+                                <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Invoice</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- Categories View -->
+        <div id="viewCategories" class="hidden space-y-6 p-6">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h3 class="font-headline-lg text-headline-lg">Category Management</h3>
+                    <p class="text-on-surface-variant text-sm mt-1">Add, list, or remove shop categories.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Left: Category list table -->
+                <div class="md:col-span-2 border border-outline bg-surface">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-surface-container-highest">
+                                <tr>
+                                    <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Icon</th>
+                                    <th class="p-4 font-label-md text-label-md border-b border-outline uppercase">Name</th>
+                                    <th class="p-4 font-label-md text-label-md border-b border-outline uppercase text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categories-tbody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Right: Add Category Form -->
+                <div class="border border-outline bg-surface p-6 space-y-4 h-fit">
+                    <h4 class="font-label-md text-label-md text-primary uppercase border-b border-outline-variant/30 pb-2">Add New Category</h4>
+                    <form id="addCategoryForm" class="space-y-4">
+                        <div>
+                            <label class="block font-label-md text-[11px] uppercase tracking-wider text-on-surface-variant mb-1">Category Name</label>
+                            <input id="newCatName" required class="w-full bg-surface border border-outline-variant px-3 py-2 font-body-md focus:outline-none focus:border-primary text-on-surface" type="text" placeholder="e.g. Wardrobes">
+                        </div>
+                        <div>
+                            <label class="block font-label-md text-[11px] uppercase tracking-wider text-on-surface-variant mb-1">Icon Style (FontAwesome Class or Text)</label>
+                            <input id="newCatIcon" required class="w-full bg-surface border border-outline-variant px-3 py-2 font-body-md focus:outline-none focus:border-primary text-on-surface" type="text" placeholder="e.g. fas fa-archive">
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-on-primary py-3 font-label-md uppercase tracking-widest hover:opacity-90 transition-opacity">
+                            Create Category
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer
+            class="w-full py-8 px-gutter flex flex-col items-center justify-center space-y-4 bg-surface-container-highest border-t-border-width border-outline mt-20">
+            <div class="flex gap-8">
+                <a class="text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors"
+                    href="#">About Us</a>
+                <a class="text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors"
+                    href="#">Contact</a>
+                <a class="text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors"
+                    href="#">Shipping Policy</a>
+            </div>
+            <p class="font-body-md text-body-md text-on-surface">Palamootttil wood industries and furniture · Pathanamthitta,
+                Kerala.</p>
+            <p class="text-caption text-on-surface-variant">© 2024 Administrative Terminal. All structural data logged.
+            </p>
+        </footer>
+    </main>
+
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+
+</html>
