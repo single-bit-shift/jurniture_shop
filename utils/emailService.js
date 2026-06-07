@@ -1,12 +1,18 @@
 const nodemailer = require('nodemailer');
 
-// ── Transporter Setup ────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // Use STARTTLS (port 587) which is much more reliable on cloud hosting networks like Render
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
-    }
+    },
+    tls: {
+        rejectUnauthorized: false
+    },
+    connectionTimeout: 15000, // 15 seconds
+    socketTimeout: 15000
 });
 
 // ── Branded HTML Layout Wrapper ─────────────────────────────────
