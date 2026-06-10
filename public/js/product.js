@@ -1,26 +1,56 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // Check auth
-    if (!auth.isLoggedIn()) {
-        window.location.href = "/login.html";
-        return;
-    }
-
-    // Bind Profile Header
-    const user = auth.getUser();
+    // ── 1. DYNAMIC HEADER MANAGEMENT ─────────────────────────────────
+    const isLoggedIn = auth.isLoggedIn();
     const profileNameEl = document.getElementById("profileName");
-    if (profileNameEl && user) {
-        profileNameEl.textContent = user.name;
-        if (user.isAdmin) {
-            profileNameEl.href = "/admin.html";
-        } else {
-            profileNameEl.href = "/login.html";
-        }
-    }
+    const adminBtn = document.getElementById("adminBtn");
+    const ordersLink = document.querySelector('header a[href="/orders.html"]');
     const signOutBtn = document.getElementById("signOutBtn");
-    if (signOutBtn) {
-        signOutBtn.addEventListener("click", () => {
-            auth.logout();
-        });
+
+    if (isLoggedIn) {
+        const user = auth.getUser();
+        
+        // Show and format profile link
+        if (profileNameEl && user) {
+            profileNameEl.style.display = "inline-block";
+            profileNameEl.textContent = `Profile (${user.name})`;
+            profileNameEl.href = "/profile.html";
+        }
+        
+        // Show orders link
+        if (ordersLink) {
+            ordersLink.style.display = "inline-block";
+        }
+        
+        // Show admin button if admin
+        if (auth.isAdmin() && adminBtn) {
+            adminBtn.style.display = "inline-block";
+            adminBtn.addEventListener("click", () => {
+                window.location.href = "/admin.html";
+            });
+        } else if (adminBtn) {
+            adminBtn.style.display = "none";
+        }
+        
+        // Setup Sign Out
+        if (signOutBtn) {
+            signOutBtn.textContent = "Sign Out";
+            signOutBtn.addEventListener("click", () => {
+                auth.logout();
+            });
+        }
+    } else {
+        // Guest mode - hide user options
+        if (profileNameEl) profileNameEl.style.display = "none";
+        if (ordersLink) ordersLink.style.display = "none";
+        if (adminBtn) adminBtn.style.display = "none";
+        
+        // Turn "Sign Out" into "Sign In"
+        if (signOutBtn) {
+            signOutBtn.textContent = "Sign In";
+            signOutBtn.addEventListener("click", () => {
+                window.location.href = "/login.html";
+            });
+        }
     }
 
     // Basic product detail fetching
@@ -137,6 +167,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (enquireBtn && enquireModal) {
                     enquireBtn.addEventListener('click', () => {
+                        if (!auth.isLoggedIn()) {
+                            alert('Please log in to submit a product inquiry.');
+                            window.location.href = '/login.html';
+                            return;
+                        }
                         if (enquireProductName) enquireProductName.value = p.name;
                         if (enquireError) enquireError.classList.add('hidden');
                         if (enquireSuccess) enquireSuccess.classList.add('hidden');
