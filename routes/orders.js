@@ -99,7 +99,7 @@ router.put('/:id/status', protect, admin, async (req, res) => {
         const order = await Order.findByIdAndUpdate(
             req.params.id,
             { status },
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true }
         ).populate('userId', 'name email');
 
         if (!order) {

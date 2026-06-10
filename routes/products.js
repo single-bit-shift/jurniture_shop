@@ -88,7 +88,7 @@ router.put('/:id', protect, admin, upload.single('image'), async (req, res) => {
                         return res.status(500).json({ success: false, error: 'Upload failed' });
                     }
                     updateData.image = result.secure_url;
-                    const product = await Product.findByIdAndUpdate(req.params.id, updateData, { new: true, runValidators: true });
+                    const product = await Product.findByIdAndUpdate(req.params.id, updateData, { returnDocument: 'after', runValidators: true });
                     if (!product) return res.status(404).json({ success: false, error: 'Product not found' });
                     res.json({ success: true, data: product });
                 }
@@ -96,7 +96,7 @@ router.put('/:id', protect, admin, upload.single('image'), async (req, res) => {
             stream.end(req.file.buffer);
         } else {
             if (req.body.imageUrl) updateData.image = req.body.imageUrl;
-            const product = await Product.findByIdAndUpdate(req.params.id, updateData, { new: true, runValidators: true });
+            const product = await Product.findByIdAndUpdate(req.params.id, updateData, { returnDocument: 'after', runValidators: true });
             if (!product) return res.status(404).json({ success: false, error: 'Product not found' });
             res.json({ success: true, data: product });
         }
