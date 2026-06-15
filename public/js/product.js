@@ -92,55 +92,57 @@ document.addEventListener('DOMContentLoaded', async () => {
                     detailsCategoryTag.textContent = p.category;
                 }
                 
-                const detailsStockStatus = document.getElementById('detailsStockStatus');
-                if (detailsStockStatus) {
-                    const isAvailable = p.stock === 'In Stock';
-                    const iconName = isAvailable ? 'check_circle' : 'error';
-                    detailsStockStatus.innerHTML = `
-                        <span class="material-symbols-outlined text-[14px]" data-icon="${iconName}" data-weight="fill">${iconName}</span>
-                        ${p.stock.toUpperCase()}
-                    `;
-                    if (p.stock === 'In Stock') {
-                        detailsStockStatus.className = "flex items-center gap-1 font-label-md text-[12px] text-primary";
-                    } else if (p.stock === 'Out of Stock') {
-                        detailsStockStatus.className = "flex items-center gap-1 font-label-md text-[12px] text-error";
-                    } else {
-                        detailsStockStatus.className = "flex items-center gap-1 font-label-md text-[12px] text-secondary";
-                    }
-                }
-
-                const detailsTitle = document.getElementById('detailsTitle');
-                if (detailsTitle) {
-                    detailsTitle.textContent = p.name;
-                }
-
-                const detailsPrice = document.getElementById('detailsPrice');
-                if (detailsPrice) {
-                    detailsPrice.textContent = `₹${Number(p.price || 0).toLocaleString('en-IN')}`;
-                }
-
-                const detailsDescription = document.getElementById('detailsDescription');
-                if (detailsDescription) {
-                    detailsDescription.textContent = p.description || 'No description available.';
-                }
-
-                // Bind Technical Specifications
-                const specMaterial = document.getElementById('specMaterial');
-                if (specMaterial) {
-                    specMaterial.textContent = p.material || 'N/A';
-                }
-
-                const specDimensions = document.getElementById('specDimensions');
-                if (specDimensions) {
-                    specDimensions.textContent = p.dimensions || 'N/A';
-                }
-
-                const specAvailability = document.getElementById('specAvailability');
-                if (specAvailability) {
-                    specAvailability.textContent = p.stock === 'In Stock' 
-                        ? 'Immediate Delivery (Pathanamthitta Region)' 
-                        : (p.stock === 'Made to Order' ? 'Made to Order (2-3 weeks)' : 'Currently Unavailable');
-                }
+                 const detailsStockStatus = document.getElementById('detailsStockStatus');
+                 if (detailsStockStatus) {
+                     const isAvailable = p.stock === 'In Stock';
+                     const iconName = isAvailable ? 'check_circle' : 'error';
+                     const qtyStr = p.stock === 'In Stock' ? ` (${p.quantity !== undefined ? p.quantity : 10})` : '';
+                     detailsStockStatus.innerHTML = `
+                         <span class="material-symbols-outlined text-[14px]" data-icon="${iconName}" data-weight="fill">${iconName}</span>
+                         ${p.stock.toUpperCase()}${qtyStr}
+                     `;
+                     if (p.stock === 'In Stock') {
+                         detailsStockStatus.className = "flex items-center gap-1 font-label-md text-[12px] text-primary";
+                     } else if (p.stock === 'Out of Stock') {
+                         detailsStockStatus.className = "flex items-center gap-1 font-label-md text-[12px] text-error";
+                     } else {
+                         detailsStockStatus.className = "flex items-center gap-1 font-label-md text-[12px] text-secondary";
+                     }
+                 }
+ 
+                 const detailsTitle = document.getElementById('detailsTitle');
+                 if (detailsTitle) {
+                     detailsTitle.textContent = p.name;
+                 }
+ 
+                 const detailsPrice = document.getElementById('detailsPrice');
+                 if (detailsPrice) {
+                     detailsPrice.textContent = `₹${Number(p.price || 0).toLocaleString('en-IN')}`;
+                 }
+ 
+                 const detailsDescription = document.getElementById('detailsDescription');
+                 if (detailsDescription) {
+                     detailsDescription.textContent = p.description || 'No description available.';
+                 }
+ 
+                 // Bind Technical Specifications
+                 const specMaterial = document.getElementById('specMaterial');
+                 if (specMaterial) {
+                     specMaterial.textContent = p.material || 'N/A';
+                 }
+ 
+                 const specDimensions = document.getElementById('specDimensions');
+                 if (specDimensions) {
+                     specDimensions.textContent = p.dimensions || 'N/A';
+                 }
+ 
+                 const specAvailability = document.getElementById('specAvailability');
+                 if (specAvailability) {
+                     const availableQuantity = p.quantity !== undefined ? p.quantity : 10;
+                     specAvailability.textContent = p.stock === 'In Stock' 
+                         ? `Immediate Delivery - ${availableQuantity} units available (Pathanamthitta Region)` 
+                         : (p.stock === 'Made to Order' ? 'Made to Order (2-3 weeks)' : 'Currently Unavailable');
+                 }
 
                 const specCategory = document.getElementById('specCategory');
                 if (specCategory) {

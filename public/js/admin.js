@@ -180,7 +180,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td class="p-4 font-body-md text-on-surface-variant">${p.category}</td>
                     <td class="p-4 font-label-md text-label-md">₹${Number(p.price || 0).toLocaleString('en-IN')}</td>
                     <td class="p-4">
-                        <span class="inline-block px-2 py-1 border border-outline-variant ${p.stock === 'In Stock' ? 'border-primary text-primary' : 'border-error text-error'} font-label-md text-[10px] uppercase tracking-wider">${p.stock}</span>
+                        <span class="inline-block px-2 py-1 border border-outline-variant ${p.stock === 'In Stock' ? 'border-primary text-primary' : 'border-error text-error'} font-label-md text-[10px] uppercase tracking-wider">
+                            ${p.stock === 'In Stock' ? `${p.stock} (${p.quantity !== undefined ? p.quantity : 10})` : p.stock}
+                        </span>
                     </td>
                     <td class="p-4 text-right opacity-0 group-hover:opacity-100 transition-opacity">
                         <button onclick="editProduct('${p._id}')" class="text-primary hover:text-primary-container mr-2"><span class="material-symbols-outlined text-sm">edit</span></button>
@@ -263,13 +265,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         form.material.value = product.material || '';
         form.dimensions.value = product.dimensions || '';
         form.stock.value = product.stock || 'In Stock';
+        form.quantity.value = product.quantity !== undefined ? product.quantity : 10;
         form.description.value = product.description || '';
         form.imageUrl.value = product.image || '';
     };
 
     const resetForm = () => {
         editingProductId = null;
-        if (form) form.reset();
+        if (form) {
+            form.reset();
+            form.quantity.value = 10;
+        }
         const formTitle = document.getElementById('formTitle');
         if (formTitle) formTitle.textContent = 'New Product Entry';
     };

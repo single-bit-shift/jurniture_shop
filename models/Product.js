@@ -28,6 +28,10 @@ const productSchema = new mongoose.Schema({
         enum: ['In Stock', 'Out of Stock', 'Made to Order'],
         default: 'In Stock'
     },
+    quantity: {
+        type: Number,
+        default: 10
+    },
     image: {
         type: String // URL or path to image
     },

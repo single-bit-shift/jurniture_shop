@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="${p.name}">
                             <div class="absolute top-4 left-4 ${badgeBg} px-3 py-1">
                                 <span class="font-label-md text-[10px] text-on-primary uppercase font-bold">
-                                    ${p.stock}
+                                    ${p.stock === 'In Stock' ? `${p.stock} (${p.quantity !== undefined ? p.quantity : 10})` : p.stock}
                                 </span>
                             </div>
                         </div>

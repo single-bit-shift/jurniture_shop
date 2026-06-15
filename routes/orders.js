@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 const User = require('../models/User');
+const Product = require('../models/Product');
 const { protect } = require('../middleware/auth');
 const { admin } = require('../middleware/admin');
 const { sendOrderConfirmation, sendOrderStatusUpdate } = require('../utils/emailService');
@@ -12,12 +13,51 @@ const { generateInvoice } = require('../utils/invoiceGenerator');
 router.post('/', protect, async (req, res) => {
     try {
         const { items, totalAmount, deliveryAddress } = req.body;
+
+        // Pre-checkout stock validation
+        for (const item of items) {
+            const product = await Product.findById(item.productId);
+            if (!product) {
+                return res.status(404).json({ success: false, error: `Product "${item.name}" not found.` });
+            }
+
+            if (product.stock === 'Out of Stock') {
+                return res.status(400).json({ success: false, error: `Product "${product.name}" is out of stock.` });
+            }
+
+            if (product.stock === 'In Stock') {
+                const availableQuantity = product.quantity !== undefined ? product.quantity : 10;
+                if (availableQuantity < item.quantity) {
+                    return res.status(400).json({
+                        success: false,
+                        error: `Only ${availableQuantity} units of "${product.name}" are available in stock.`
+                    });
+                }
+            }
+        }
+
+        // Create the order
         const newOrder = await Order.create({
             userId: req.user._id,
             items,
             totalAmount,
             deliveryAddress
         });
+
+        // Decrement stock counts
+        for (const item of items) {
+            const product = await Product.findById(item.productId);
+            if (product && product.stock === 'In Stock') {
+                const currentQty = product.quantity !== undefined ? product.quantity : 10;
+                let newQty = currentQty - item.quantity;
+                if (newQty <= 0) {
+                    newQty = 0;
+                    product.stock = 'Out of Stock';
+                }
+                product.quantity = newQty;
+                await product.save();
+            }
+        }
 
         // Send order confirmation email (fire-and-forget, non-blocking)
         const user = await User.findById(req.user._id);

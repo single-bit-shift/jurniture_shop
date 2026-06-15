@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <div class="aspect-[4/5] bg-surface-variant relative overflow-hidden">
                             <img alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${product.image || 'https://via.placeholder.com/400x500?text=No+Image'}">
                             <div class="absolute top-4 left-4 ${badgeBg} px-3 py-1">
-                                <span class="font-label-md text-[10px] text-on-primary uppercase font-bold">${product.stock}</span>
+                                <span class="font-label-md text-[10px] text-on-primary uppercase font-bold">${product.stock === 'In Stock' ? `${product.stock} (${product.quantity !== undefined ? product.quantity : 10})` : product.stock}</span>
                             </div>
                         </div>
                         <div class="p-4">
