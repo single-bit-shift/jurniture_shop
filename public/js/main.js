@@ -119,7 +119,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 <span class="font-headline-md text-headline-md text-on-surface">
                                     ₹${Number(p.price || 0).toLocaleString('en-IN')}
                                 </span>
-                                <span class="material-symbols-outlined text-primary-container" data-icon="add_shopping_cart">add_shopping_cart</span>
+                                <span class="material-symbols-outlined text-primary-container add-to-cart-btn cursor-pointer hover:scale-110 transition-transform" 
+                                      data-icon="add_shopping_cart"
+                                      data-id="${p._id}"
+                                      data-name="${p.name}"
+                                      data-price="${p.price || 0}"
+                                      data-image="${p.image || ''}">add_shopping_cart</span>
                             </div>
                         </div>
                     </div>
@@ -129,6 +134,22 @@ document.addEventListener("DOMContentLoaded", async () => {
                 container.querySelectorAll(".product-card").forEach(card => {
                     card.addEventListener("click", () => {
                         window.location.href = `/product.html?id=${card.dataset.id}`;
+                    });
+                });
+
+                // Attach click → add to cart directly
+                container.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+                    btn.addEventListener("click", (e) => {
+                        e.stopPropagation(); // Stop navigation to product.html
+                        const id = btn.dataset.id;
+                        const name = btn.dataset.name;
+                        const price = Number(btn.dataset.price);
+                        const image = btn.dataset.image;
+                        if (typeof addToCart === "function") {
+                            addToCart(id, name, price, image);
+                        } else {
+                            console.error("addToCart function not found!");
+                        }
                     });
                 });
             } else {
