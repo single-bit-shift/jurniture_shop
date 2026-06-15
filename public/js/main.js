@@ -94,12 +94,21 @@ document.addEventListener("DOMContentLoaded", async () => {
                     return;
                 }
 
-                container.innerHTML = products.map(p => `
-                    <div class="blueprint-border group cursor-pointer bg-surface product-card" data-id="${p._id}">
+                container.innerHTML = products.map(p => {
+                    const isOutOfStock = p.stock === 'Out of Stock';
+                    let badgeBg = 'bg-tertiary';
+                    if (p.stock === 'In Stock') {
+                        badgeBg = 'bg-primary';
+                    } else if (isOutOfStock) {
+                        badgeBg = 'bg-error';
+                    }
+
+                    return `
+                    <div class="blueprint-border group cursor-pointer bg-surface product-card ${isOutOfStock ? 'grayscale opacity-60' : ''}" data-id="${p._id}">
                         <div class="aspect-[4/5] bg-surface-variant relative overflow-hidden">
                             <img src="${p.image || 'https://dummyimage.com/300x300/cccccc/000000&text=No+Image'}"
                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="${p.name}">
-                            <div class="absolute top-4 left-4 ${p.stock === 'In Stock' ? 'bg-primary' : 'bg-tertiary'} px-3 py-1">
+                            <div class="absolute top-4 left-4 ${badgeBg} px-3 py-1">
                                 <span class="font-label-md text-[10px] text-on-primary uppercase font-bold">
                                     ${p.stock}
                                 </span>
@@ -119,16 +128,23 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 <span class="font-headline-md text-headline-md text-on-surface">
                                     ₹${Number(p.price || 0).toLocaleString('en-IN')}
                                 </span>
-                                <span class="material-symbols-outlined text-primary-container add-to-cart-btn cursor-pointer hover:scale-110 transition-transform" 
-                                      data-icon="add_shopping_cart"
-                                      data-id="${p._id}"
-                                      data-name="${p.name}"
-                                      data-price="${p.price || 0}"
-                                      data-image="${p.image || ''}">add_shopping_cart</span>
+                                ${isOutOfStock ? `
+                                    <span class="material-symbols-outlined text-outline opacity-40 cursor-not-allowed" 
+                                          title="Out of Stock"
+                                          data-icon="remove_shopping_cart">remove_shopping_cart</span>
+                                ` : `
+                                    <span class="material-symbols-outlined text-primary-container add-to-cart-btn cursor-pointer hover:scale-110 transition-transform" 
+                                          data-icon="add_shopping_cart"
+                                          data-id="${p._id}"
+                                          data-name="${p.name}"
+                                          data-price="${p.price || 0}"
+                                          data-image="${p.image || ''}">add_shopping_cart</span>
+                                `}
                             </div>
                         </div>
                     </div>
-                `).join("");
+                    `;
+                }).join("");
 
                 // Attach click → detail page
                 container.querySelectorAll(".product-card").forEach(card => {

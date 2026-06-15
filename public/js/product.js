@@ -150,9 +150,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Bind Add to Cart
                 const addToCartBtn = document.getElementById('addToCartBtn');
                 if (addToCartBtn) {
-                    addToCartBtn.addEventListener('click', () => {
-                        addToCart(p._id, p.name, p.price, p.image);
-                    });
+                    if (p.stock === 'Out of Stock') {
+                        addToCartBtn.disabled = true;
+                        addToCartBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                        addToCartBtn.innerHTML = `
+                            <span class="material-symbols-outlined text-sm">remove_shopping_cart</span> Out of Stock
+                        `;
+                    } else {
+                        addToCartBtn.disabled = false;
+                        addToCartBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                        addToCartBtn.innerHTML = `
+                            <span class="material-symbols-outlined text-sm">add_shopping_cart</span> Add to Cart
+                        `;
+                        addToCartBtn.addEventListener('click', () => {
+                            addToCart(p._id, p.name, p.price, p.image);
+                        });
+                    }
                 }
 
                 // Bind Inquiry Modal Toggle
