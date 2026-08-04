@@ -100,7 +100,7 @@
                                                 "body-md": ["IBM Plex Sans"],
                                                 "display-lg": ["Playfair Display"],
                                                 "body-lg": ["IBM Plex Sans"],
-                                                "headline-lg": ["Playfair Display"],
+                                                "headline-lg": ["IBM Plex Sans"],
                                                 "display-lg-mobile": ["Playfair Display"],
                                                 "caption": ["IBM Plex Sans"]
                                         },
@@ -128,20 +128,23 @@
 <body
         class="bg-background text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container">
         <!-- TopAppBar from JSON -->
-        <header
-                class="bg-inverse-surface flex justify-between items-center w-full px-gutter py-unit max-w-full docked full-width top-0 z-50 border-b-border-width border-outline dark:border-outline-variant">
+        <header id="mainHeader"
+                class="bg-white flex justify-between items-center w-full px-gutter py-6 md:py-8 max-w-full sticky top-0 z-50 border-b-border-width border-outline transition-all duration-300 ease-in-out shadow-sm">
                 <div class="flex items-center gap-4">
-                        <span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
-                        <div class="flex items-center gap-3"><img
+                        <span class="material-symbols-outlined text-primary cursor-pointer" data-icon="menu">menu</span>
+                        <a href="/index.html" class="flex items-center gap-3 md:gap-4 group">
+                                <img id="headerLogo"
                                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuApOdzAXPydRRzCRskbbbvNF5fPSCIcPn7dLg3TWn3kG-SeTjzconCgSWhzWdvSLCHy_1f86vqT94RJAjNkaAWErZ0o5R7ZjcWlizgc73EBFGg5Rlfb7FY4E_iuc2RwD17eF5-NDi4R7l2-odz8Wy-xPCRkN26oCvgjVl-vKPzYt3Dov7G4Qf2xUQd6jtVNw9r7T78xJs-NGPhi7_de_TBpdElsXVsJMOB7CDyEHxWEZClArLDVcqyi8-B062WiMP8oD9zUnWCGj0JS"
-                                        alt="Palamootttil wood industries and furniture logo"
-                                        class="h-12 w-auto object-contain"><span
-                                        class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed uppercase tracking-wider">Palamootttil
-                                        wood industries and furniture</span></div>
+                                        alt="Palamootttil Furniture logo"
+                                        class="h-16 md:h-20 w-auto object-contain transition-all duration-300">
+                                <span id="headerTitle"
+                                        class="font-headline-md text-xl md:text-3xl font-bold text-primary uppercase tracking-wider transition-all duration-300">PALAMOOTTTIL
+                                        FURNITURE</span>
+                        </a>
                 </div>
                 <!-- Search Bar (Custom Expansion) -->
                 <div
-                        class="hidden md:flex flex-grow max-w-2xl mx-8 items-center bg-surface-container blueprint-border p-0">
+                        class="hidden md:flex flex-grow max-w-xl mx-8 items-center bg-surface-container blueprint-border p-0">
                         <input id="headerSearchInput" class="flex-grow bg-transparent border-none focus:ring-0 px-4 font-body-md text-on-surface"
                                 placeholder="Search products..." type="text">
                         <button id="headerSearchBtn" class="px-4 py-2 text-on-surface-variant hover:text-primary transition-colors">
@@ -150,18 +153,18 @@
                 </div>
                 <div class="flex items-center gap-6">
                         <div class="hidden lg:flex gap-4 items-center">
-                                <a id="profileName" class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2"
+                                <a id="profileName" class="font-label-md text-label-md text-on-surface hover:text-primary hover:bg-surface-container transition-all duration-150 px-3 py-2"
                                         href="/profile.html">Profile</a>
-                                <button id="adminBtn" style="display:none;" class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2">Admin</button>
-                                <a class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2"
+                                <button id="adminBtn" style="display:none;" class="font-label-md text-label-md text-on-surface hover:text-primary hover:bg-surface-container transition-all duration-150 px-3 py-2">Admin</button>
+                                <a class="font-label-md text-label-md text-on-surface hover:text-primary hover:bg-surface-container transition-all duration-150 px-3 py-2"
                                         href="/orders.html">Orders</a>
-                                <button id="cartToggleBtn" class="relative font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2 flex items-center gap-1">
+                                <button id="cartToggleBtn" class="relative font-label-md text-label-md text-on-surface hover:text-primary hover:bg-surface-container transition-all duration-150 px-3 py-2 flex items-center gap-1">
                                     <span class="material-symbols-outlined">shopping_cart</span>
                                     <span id="cartBadge" class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold hidden">0</span>
                                 </button>
                         </div>
                         <button id="signOutBtn"
-                                class="font-label-md text-label-md text-on-primary font-bold hover:bg-primary-container hover:text-on-primary-container px-4 py-2 border-l border-outline uppercase tracking-widest">Sign
+                                class="font-label-md text-label-md text-on-surface font-bold hover:bg-surface-container px-4 py-2 border-l border-outline uppercase tracking-widest transition-colors">Sign
                                 Out</button>
                 </div>
         </header>

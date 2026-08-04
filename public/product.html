@@ -104,20 +104,26 @@
   </head>
 <body class="font-body-md text-on-background">
 <!-- TopAppBar -->
-<header class="bg-inverse-surface dark:bg-inverse-surface border-b-border-width border-outline dark:border-outline-variant sticky top-0 z-50">
-<div class="flex justify-between items-center w-full px-gutter py-unit max-w-full">
-<div class="flex items-center gap-4"><span class="material-symbols-outlined text-primary" data-icon="menu">menu</span><div class="flex items-center gap-2"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuApOdzAXPydRRzCRskbbbvNF5fPSCIcPn7dLg3TWn3kG-SeTjzconCgSWhzWdvSLCHy_1f86vqT94RJAjNkaAWErZ0o5R7ZjcWlizgc73EBFGg5Rlfb7FY4E_iuc2RwD17eF5-NDi4R7l2-odz8Wy-xPCRkN26oCvgjVl-vKPzYt3Dov7G4Qf2xUQd6jtVNw9r7T78xJs-NGPhi7_de_TBpdElsXVsJMOB7CDyEHxWEZClArLDVcqyi8-B062WiMP8oD9zUnWCGj0JS" alt="Logo" class="h-10 w-10 object-contain"><span class="font-headline-md text-headline-md font-bold text-primary">Palamootttil wood industries and furniture</span></div></div>
+<header class="bg-white border-b-border-width border-outline sticky top-0 z-50 shadow-sm">
+<div class="flex justify-between items-center w-full px-gutter py-3 max-w-full">
+<div class="flex items-center gap-4">
+    <span class="material-symbols-outlined text-primary cursor-pointer" data-icon="menu">menu</span>
+    <a href="/index.html" class="flex items-center gap-3">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuApOdzAXPydRRzCRskbbbvNF5fPSCIcPn7dLg3TWn3kG-SeTjzconCgSWhzWdvSLCHy_1f86vqT94RJAjNkaAWErZ0o5R7ZjcWlizgc73EBFGg5Rlfb7FY4E_iuc2RwD17eF5-NDi4R7l2-odz8Wy-xPCRkN26oCvgjVl-vKPzYt3Dov7G4Qf2xUQd6jtVNw9r7T78xJs-NGPhi7_de_TBpdElsXVsJMOB7CDyEHxWEZClArLDVcqyi8-B062WiMP8oD9zUnWCGj0JS" alt="Logo" class="h-11 w-auto object-contain">
+        <span class="font-headline-md text-xl font-bold text-primary uppercase tracking-wider">PALAMOOTTTIL FURNITURE</span>
+    </a>
+</div>
 <div class="hidden md:flex gap-6 items-center">
     <div class="hidden lg:flex gap-4 items-center">
-        <a id="profileName" class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2" href="/profile.html">Profile</a>
-        <button id="adminBtn" style="display:none;" class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2">Admin</button>
-        <a class="font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2" href="/orders.html">Orders</a>
-        <button id="cartToggleBtn" class="relative font-label-md text-label-md text-on-primary hover:bg-primary-container hover:text-on-primary-container transition-opacity duration-150 px-3 py-2 flex items-center gap-1">
+        <a id="profileName" class="font-label-md text-label-md text-on-surface hover:text-primary hover:bg-surface-container transition-opacity duration-150 px-3 py-2" href="/profile.html">Profile</a>
+        <button id="adminBtn" style="display:none;" class="font-label-md text-label-md text-on-surface hover:text-primary hover:bg-surface-container transition-opacity duration-150 px-3 py-2">Admin</button>
+        <a class="font-label-md text-label-md text-on-surface hover:text-primary hover:bg-surface-container transition-opacity duration-150 px-3 py-2" href="/orders.html">Orders</a>
+        <button id="cartToggleBtn" class="relative font-label-md text-label-md text-on-surface hover:text-primary hover:bg-surface-container transition-opacity duration-150 px-3 py-2 flex items-center gap-1">
             <span class="material-symbols-outlined">shopping_cart</span>
             <span id="cartBadge" class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold hidden">0</span>
         </button>
     </div>
-    <button id="signOutBtn" class="font-label-md text-label-md text-on-primary font-bold hover:bg-primary-container hover:text-on-primary-container px-4 py-2 border-l border-outline uppercase tracking-widest">Sign Out</button>
+    <button id="signOutBtn" class="font-label-md text-label-md text-on-surface font-bold hover:bg-surface-container px-4 py-2 border-l border-outline uppercase tracking-widest">Sign Out</button>
 </div>
 </div>
 </header>

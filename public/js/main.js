@@ -55,6 +55,38 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    // ── 1B. HEADER SCROLL ANIMATION ─────────────────────────────────
+    const mainHeader = document.getElementById("mainHeader");
+    const headerLogo = document.getElementById("headerLogo");
+    const headerTitle = document.getElementById("headerTitle");
+
+    if (mainHeader && headerLogo && headerTitle) {
+        const handleHeaderScroll = () => {
+            if (window.scrollY > 30) {
+                mainHeader.classList.remove("py-6", "md:py-8");
+                mainHeader.classList.add("py-2", "md:py-3");
+
+                headerLogo.classList.remove("h-16", "md:h-20");
+                headerLogo.classList.add("h-10", "md:h-11");
+
+                headerTitle.classList.remove("text-xl", "md:text-3xl");
+                headerTitle.classList.add("text-base", "md:text-lg");
+            } else {
+                mainHeader.classList.remove("py-2", "md:py-3");
+                mainHeader.classList.add("py-6", "md:py-8");
+
+                headerLogo.classList.remove("h-10", "md:h-11");
+                headerLogo.classList.add("h-16", "md:h-20");
+
+                headerTitle.classList.remove("text-base", "md:text-lg");
+                headerTitle.classList.add("text-xl", "md:text-3xl");
+            }
+        };
+
+        window.addEventListener("scroll", handleHeaderScroll, { passive: true });
+        handleHeaderScroll();
+    }
+
     // ── 3. STATE ───────────────────────────────────────────────────
     let currentCategory = "";
     let currentSearch = "";
