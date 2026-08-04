@@ -65,8 +65,37 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    // Helper function to keep department inventory counts live and accurate (in-stock items only)
+    async function updateDepartmentInventory() {
+        try {
+            const res = await api.getProducts("", "");
+            if (res.success && res.data) {
+                const allProducts = res.data;
+                const categories = ['Beds', 'Windows', 'Doors', 'Chairs', 'Dining Tables'];
+                categories.forEach(cat => {
+                    const inStockProducts = allProducts.filter(p => 
+                        p.category === cat && 
+                        p.stock !== 'Out of Stock' && 
+                        (p.quantity === undefined || p.quantity > 0)
+                    );
+                    const count = inStockProducts.length;
+                    const id = `catCount${cat.replace(' ', '')}`;
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.textContent = `${count} ${count === 1 ? 'Item' : 'Items'}`;
+                    }
+                });
+            }
+        } catch (err) {
+            console.error("Failed to update department inventory counts:", err);
+        }
+    }
+
     // ── 4. CORE LOAD FUNCTION ──────────────────────────────────────
     async function loadProducts() {
+        // Keep top department inventory card counts up to date
+        updateDepartmentInventory();
+
         // Loading state
         container.innerHTML = `<div class="col-span-full loading">Loading...</div>`;
 
@@ -75,19 +104,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (res.success) {
                 const products = res.data;
-
-                // Set counts dynamically when no category/search filter is active
-                if (currentCategory === "" && currentSearch === "") {
-                    const categories = ['Beds', 'Windows', 'Doors', 'Chairs', 'Dining Tables'];
-                    categories.forEach(cat => {
-                        const count = products.filter(p => p.category === cat).length;
-                        const id = `catCount${cat.replace(' ', '')}`;
-                        const el = document.getElementById(id);
-                        if (el) {
-                            el.textContent = `${count} ${count === 1 ? 'Item' : 'Items'}`;
-                        }
-                    });
-                }
 
                 if (products.length === 0) {
                     container.innerHTML = `<div class="col-span-full empty-state">No products found.</div>`;
@@ -240,6 +256,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             loadProducts();
         });
     }
+
+    // Department Inventory card click listeners
+    document.querySelectorAll(".department-card").forEach(card => {
+        card.addEventListener("click", () => {
+            const cat = card.dataset.category;
+            if (cat) {
+                currentCategory = cat;
+                sessionStorage.setItem("activeCategory", currentCategory);
+                syncCategoryUI(currentCategory);
+                loadProducts();
+            }
+        });
+    });
 
     // "All Categories" reset
     const navAllCategories = document.getElementById("navAllCategories");
